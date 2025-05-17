@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ulang Tahun Naruto!</title>
+    <title>Selamat Ulang Tahun Pak Muiz!</title>
     <style>
         body {
             margin: 0;
@@ -13,15 +13,8 @@
             align-items: center;
             min-height: 100vh;
             font-family: 'Arial', sans-serif;
-            background-color: #000;
-            background-image: 
-                linear-gradient(45deg, rgba(255,107,107,0.1) 25%, transparent 25%),
-                linear-gradient(-45deg, rgba(255,107,107,0.1) 25%, transparent 25%),
-                linear-gradient(45deg, transparent 75%, rgba(255,107,107,0.1) 75%),
-                linear-gradient(-45deg, transparent 75%, rgba(255,107,107,0.1) 75%);
-            background-size: 40px 40px;
+            background-color: #ffffff;
             text-align: center;
-            position: relative;
             overflow: hidden;
         }
 
@@ -31,80 +24,91 @@
         }
 
         .tap-text {
-            color: #ffd700;
-            text-shadow: 0 0 10px #ff6b6b;
+            color: #e91e63;
             margin-bottom: 20px;
             font-size: 1.2em;
             animation: pulse 1.5s infinite;
+            font-weight: bold;
         }
 
         .gift-box {
             cursor: pointer;
             transition: all 0.3s ease;
-            filter: drop-shadow(0 0 15px #ff6b6b);
+            filter: drop-shadow(0 0 10px rgba(233,30,99,0.3));
         }
 
         .gift-box:hover {
-            transform: scale(1.1) rotate(-5deg);
+            transform: scale(1.1);
         }
 
         .gift-box img {
-            width: 250px;
+            width: 200px;
             height: auto;
         }
 
         .message {
             display: none;
-            font-size: 2em;
-            color: #fff;
-            text-shadow: 0 0 15px #ff6b6b;
-            animation: fadeIn 2s;
+            font-size: 1.8em;
+            color: #2196f3;
             flex-direction: column;
             align-items: center;
             margin-top: 20px;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            font-weight: bold;
+            text-align: center;
         }
 
         @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
 
-        .naruto-text {
-            color: #ff6b6b;
-            font-family: 'Comic Sans MS', cursive;
-            font-size: 1.5em;
-            margin-top: 15px;
-            text-shadow: 0 0 10px #ffd700;
+        .balloon {
+            position: fixed;
+            font-size: 30px;
+            animation: float 8s ease-in forwards;
+            bottom: -50px;
+        }
+
+        @keyframes float {
+            to {
+                transform: translateY(-120vh) rotate(360deg);
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            animation: fall 3s linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="tap-text">Klik Kado Ini! 🎁</div>
+        <div class="tap-text">Tap Kado Ini! 🎁</div>
         <div class="gift-box" onclick="showMessage()">
             <img src="https://img.icons8.com/fluency/240/000000/gift.png" alt="Kado">
         </div>
         <div class="message" id="message">
-            🎉 Selamat Ulang Tahun!
-            <div class="naruto-text">Naruto Uzumaki!</div>
-            <div style="font-size: 0.8em; margin-top: 15px;">Semoga Panjang Umur!</div>
+            <div style="color: #e91e63;">Selamat Tambah Tua, Tambah Panjang!</div>
+            <div style="color: #ff9800; margin: 15px 0;">Pak Mu'izzaddin!</div>
+            <div style="color: #4caf50; font-size: 0.7em;">Semoga Hari-harimu penuh cobaan<br>tapi dimudahkan dan menyenangkan!</div>
         </div>
     </div>
 
     <audio id="soundEffect">
-        <source src="https://www.soundjay.com/human/sounds/applause-01.mp3" type="audio/mpeg">
+        <source src="https://assets.mixkit.co/music/preview/mixkit-happy-birthday-583.mp3" type="audio/mpeg">
     </audio>
 
     <script>
-        // Inisialisasi audio
-        const audio = document.getElementById('soundEffect');
-        
         function showMessage() {
             // Sembunyikan elemen
             document.querySelector('.gift-box').style.display = 'none';
@@ -114,50 +118,50 @@
             document.getElementById('message').style.display = 'flex';
             
             // Mainkan sound effect
+            const audio = document.getElementById('soundEffect');
             audio.play().catch(error => {
-                console.log('Autoplay diblokir: ', error);
-                // Tampilkan alert interaktif
                 const playAudio = confirm('Izinkan memutar suara?');
-                if(playAudio) {
-                    audio.play();
-                }
+                if(playAudio) audio.play();
             });
             
-            // Efek konfeti
+            // Create balloons
+            createBalloons();
+            
+            // Create confetti
             createConfetti();
         }
 
+        function createBalloons() {
+            const balloonEmojis = ['🎈', '🎈', '🎈', '🎉', '🎉'];
+            for(let i = 0; i < 20; i++) {
+                const balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                balloon.textContent = balloonEmojis[Math.floor(Math.random() * balloonEmojis.length)];
+                balloon.style.left = Math.random() * 100 + 'vw';
+                balloon.style.fontSize = (Math.random() * 30 + 30) + 'px';
+                balloon.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(balloon);
+                
+                setTimeout(() => balloon.remove(), 8000);
+            }
+        }
+
         function createConfetti() {
-            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'];
-            
+            const colors = ['#e91e63', '#2196f3', '#ff9800', '#4caf50', '#9c27b0'];
             for(let i = 0; i < 100; i++) {
                 const confetti = document.createElement('div');
-                confetti.style.position = 'fixed';
-                confetti.style.width = '10px';
-                confetti.style.height = '10px';
+                confetti.className = 'confetti';
                 confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                 confetti.style.left = Math.random() * 100 + 'vw';
                 confetti.style.top = '-10px';
                 confetti.style.borderRadius = '50%';
-                confetti.style.animation = `fall ${Math.random() * 3 + 2}s linear`;
-                confetti.style.filter = 'blur(1px)';
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                confetti.style.animationDelay = Math.random() * 1 + 's';
                 document.body.appendChild(confetti);
 
-                setTimeout(() => confetti.remove(), 5000);
+                setTimeout(() => confetti.remove(), 3000);
             }
         }
-
-        // Animasi konfeti
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fall {
-                to {
-                    transform: translateY(100vh) rotate(720deg);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
     </script>
 </body>
 </html>
